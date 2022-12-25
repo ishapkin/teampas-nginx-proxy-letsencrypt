@@ -8,9 +8,9 @@ services:
       - 80
       - 443
     environment:
-      VIRTUAL_HOST: teampass.del-ta.ru
-      LETSENCRYPT_HOST: teampass.del-ta.ru
-      LETSENCRYPT_EMAIL: i.shapkin@it-ots.ru
+      VIRTUAL_HOST: teampass.example.com
+      LETSENCRYPT_HOST: teampass.example.com
+      LETSENCRYPT_EMAIL: user@example.com
     links:
       - db
     volumes:
