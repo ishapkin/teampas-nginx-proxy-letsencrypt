@@ -1,0 +1,41 @@
+version: "3"
+services:
+  teampass-web:
+    build: .
+    #image: teampass/teampass:latest
+    restart: unless-stopped
+    expose:
+      - 80
+      - 443
+    environment:
+      VIRTUAL_HOST: teampass.del-ta.ru
+      LETSENCRYPT_HOST: teampass.del-ta.ru
+      LETSENCRYPT_EMAIL: i.shapkin@it-ots.ru
+    links:
+      - db
+    volumes:
+      - ./teampass-html:/var/www/html
+    networks:
+      - teampass-internal
+      - backend
+      - default
+  db:
+    restart: unless-stopped
+    image: mariadb:10.5
+    ports:
+      - "3310:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: teampass
+      MYSQL_DATABASE: teampass
+      MYSQL_PASSWORD: teampass
+      MYSQL_USER: teampass
+    networks:
+      - teampass-internal
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
+  backend:
+    external: true
+  teampass-internal:
